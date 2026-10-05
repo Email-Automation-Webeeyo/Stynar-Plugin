@@ -1,0 +1,10 @@
+{
+  "name": "stynar",
+  "displayName": "Stynar",
+  "version": "1.0.0",
+  "description": "Find B2B prospects, write and launch cold email campaigns from your own mailbox, and handle replies — using your Stynar account from Claude.",
+  "author": { "name": "Stynar", "email": "support@stynar.com", "url": "https://stynar.com" },
+  "homepage": "https://stynar.com",
+  "license": "MIT",
+  "keywords": ["cold email", "outreach", "lead generation", "sales", "campaigns"]
+}

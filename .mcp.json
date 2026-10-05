@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "stynar": {
+      "type": "http",
+      "url": "https://mcp.stynar.com/mcp"
+    }
+  }
+}

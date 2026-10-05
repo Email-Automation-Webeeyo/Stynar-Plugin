@@ -1,0 +1,34 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "stynar",
+  "version": "1.0.0",
+  "description": "Find B2B prospects, write and launch cold email campaigns from your own mailbox, and handle replies — using your Stynar account.",
+  "author": { "name": "Stynar", "email": "support@stynar.com", "url": "https://stynar.com" },
+  "homepage": "https://stynar.com",
+  "license": "MIT",
+  "keywords": ["cold email", "outreach", "lead generation", "sales", "campaigns"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Stynar",
+        "shortDescription": "Cold email outreach",
+        "longDescription": "Stynar runs cold email outreach from your own mailboxes. Connect your Stynar account to search a licensed B2B people database, reveal verified work emails, write and launch campaigns, follow results, and read and answer replies — all from the conversation. Every action that spends credits or sends email is confirmed with you first. Requires a Stynar account.",
+        "developerName": "Webeeyo Softwers Pvt. Ltd.",
+        "category": "Productivity",
+        "capabilities": ["Read", "Write"],
+        "websiteURL": "https://stynar.com",
+        "supportURL": "https://stynar.com/support",
+        "privacyPolicyURL": "https://stynar.com/privacy",
+        "termsOfServiceURL": "https://stynar.com/terms",
+        "defaultPrompt": [
+          "Use Stynar to show how my campaigns did this month.",
+          "Use Stynar to find heads of marketing at SaaS companies in Bengaluru.",
+          "Use Stynar to go through my latest replies and draft answers."
+        ],
+        "brandColor": "#228B51",
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}
