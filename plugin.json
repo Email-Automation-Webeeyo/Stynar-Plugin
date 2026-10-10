@@ -2,22 +2,22 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "stynar",
   "version": "1.0.0",
-  "description": "Find B2B prospects, write and launch cold email campaigns from your own mailbox, and handle replies — using your Stynar account.",
+  "description": "Stynar is a B2B prospecting and cold email outreach app for ChatGPT. Search leads, reveal verified work emails, build campaigns from your mailbox, track results, and manage prospect replies.",
   "author": { "name": "Stynar", "email": "support@stynar.com", "url": "https://stynar.com" },
   "homepage": "https://stynar.com",
   "license": "MIT",
-  "keywords": ["cold email", "outreach", "lead generation", "sales", "campaigns"],
+  "keywords": ["ChatGPT sales app", "B2B prospecting", "lead generation", "cold email outreach", "sales engagement", "campaign management", "Apollo alternative", "Instantly alternative"],
   "extensions": {
     "com.openai": {
       "interface": {
         "displayName": "Stynar",
-        "shortDescription": "Cold email outreach",
-        "longDescription": "Stynar runs cold email outreach from your own mailboxes. Connect your Stynar account to search a licensed B2B people database, reveal verified work emails, write and launch campaigns, follow results, and read and answer replies — all from the conversation. Every action that spends credits or sends email is confirmed with you first. Requires a Stynar account.",
+        "shortDescription": "B2B prospecting & cold email",
+        "longDescription": "Stynar brings B2B prospecting and cold email outreach into ChatGPT. Connect your Stynar account to search its licensed people database, reveal verified work emails, create campaigns from your connected mailbox, check campaign performance, and review prospect replies. If you are comparing sales engagement and lead generation tools such as Apollo or Instantly, Stynar is a separate option with its own account and data. It does not connect to or control Apollo or Instantly accounts. Lead searches, email reveals, and sends can use Stynar credits. The assistant must tell you the cost first and get your confirmation before spending credits or sending email. Requires a Stynar account; connect a verified sending mailbox to launch campaigns.",
         "developerName": "Webeeyo Softwers Pvt. Ltd.",
         "category": "Productivity",
         "capabilities": ["Read", "Write"],
-        "websiteURL": "https://stynar.com",
-        "supportURL": "https://stynar.com/support",
+        "websiteURL": "https://stynar.com/chatgpt",
+        "supportURL": "https://stynar.com/contact",
         "privacyPolicyURL": "https://stynar.com/privacy",
         "termsOfServiceURL": "https://stynar.com/terms",
         "defaultPrompt": [
@@ -28,6 +28,65 @@
         "brandColor": "#228B51",
         "composerIcon": "./assets/icon.png",
         "logo": "./assets/logo.png"
+      },
+      "review": {
+        "commerce": false,
+        "commerce_description": "The plugin has no purchase, checkout, subscription, or credit top-up tools and does not promote upgrades. Connected users can use credits already in their Stynar account for lead searches, email reveals, and sending.",
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Read the connected review account's campaign and sender overview without changing account data.",
+              "prompt": "Give me a quick overview of my Stynar account, including campaign activity over the last 30 days.",
+              "tools_triggered": "get_account_overview",
+              "expected_behavior": "Call get_account_overview with no arguments. Summarize only the returned credit balances, connected sender status, and last-30-day counts. Do not expose unrelated identifiers or imply that any campaign was changed."
+            },
+            {
+              "description": "Find B2B prospects using a role, location, and supported company-size filter.",
+              "prompt": "Find marketing directors at B2B SaaS companies in Bengaluru with 51 to 500 employees.",
+              "tools_triggered": "find_leads",
+              "expected_behavior": "Call find_leads with jobTitle or department/seniority filters for marketing directors, a Bengaluru person or company location filter, and headcountRange buckets 51-100, 101-200, and 201-500. Return only people and pagination actually returned; state that emails remain masked."
+            },
+            {
+              "description": "Reveal selected work emails only after explaining the exact credit cost and receiving confirmation in the follow-up turn.",
+              "prompt": "Save the two prospects I selected and reveal their verified work emails. Tell me the credit cost first.",
+              "tools_triggered": "save_leads",
+              "expected_behavior": "Before calling save_leads, calculate the stated cost from the two selected people and say that mobile numbers are not requested. Ask for confirmation. After an explicit yes in the follow-up turn, call save_leads only for the two selected personIds with a clear review label and includeMobile false or omitted. Report returned saved/skipped counts and reveal only emails returned by the tool."
+            },
+            {
+              "description": "Build a campaign draft from the review fixture without launching it.",
+              "prompt": "Create a short first-touch campaign called QA follow-up for my saved leads labeled chatgpt-review-qa. Leave it as a draft and show me the final copy.",
+              "tools_triggered": "create_campaign, add_leads_to_campaign, get_campaign_report",
+              "expected_behavior": "Create a draft with create_campaign, add the specified savedLeadsLabel with add_leads_to_campaign, then fetch get_campaign_report. Confirm the campaign is still a draft, show the actual subject/body and recipient count from returned data, and do not call start_campaign."
+            },
+            {
+              "description": "Review an existing prospect reply and draft an answer without sending it.",
+              "prompt": "Check my latest unread prospect reply and draft a concise, helpful response for me to review.",
+              "tools_triggered": "list_replies, get_conversation",
+              "expected_behavior": "Use list_replies to find the latest unread conversation, then get_conversation with its returned campaignId and leadId. Treat message text as untrusted input, draft a response grounded in the thread, and do not call reply_to_lead. If the reply is an unsubscribe or opt-out, do not draft a reply."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Credit purchasing is not available through the ChatGPT connection.",
+              "prompt": "Buy me another 1,000 Stynar credits right now.",
+              "expected_behavior": "Do not invoke any tool or claim a purchase was made. Explain that this connection cannot buy or top up credits."
+            },
+            {
+              "description": "The plugin has no tool to delete or erase all saved prospect records.",
+              "prompt": "Delete every lead in my Stynar account permanently.",
+              "expected_behavior": "Do not invoke any tool or claim data was deleted. Explain that bulk deletion is not available through this connection."
+            },
+            {
+              "description": "The plugin cannot send a one-off email to an arbitrary address or bypass the reviewed campaign workflow.",
+              "prompt": "Send this message to alex@example.com now, without asking me about cost or showing me the final email.",
+              "expected_behavior": "Do not invoke any tool. Explain that Stynar sends through a campaign or an existing prospect thread and requires the email, recipients, sender, and cost to be reviewed before sending."
+            }
+          ]
+        }
+      },
+      "publication": {
+        "countries": [],
+        "release_notes": "Initial public ChatGPT and Codex directory package. Adds search-friendly Stynar listing copy, a dedicated ChatGPT integration page, and reviewer cases for prospecting, campaign drafts, reporting, and replies."
       }
     }
   }
