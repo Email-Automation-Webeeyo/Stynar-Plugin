@@ -3,7 +3,7 @@
   "mcpServers": {
     "stynar": {
       "type": "streamable-http",
-      "url": "https://mcp.stynar.com/mcp"
+      "url": "https://mcp.stynar.com"
     }
   }
 }

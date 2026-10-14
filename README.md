@@ -6,7 +6,7 @@ Looking for a comparison? See [Stynar vs Apollo](https://stynar.com/alternatives
 
 ## What's inside
 
-- **Stynar connector**: a remote MCP server at `https://mcp.stynar.com/mcp`. It covers your account overview, campaigns, Lead Finder, saved leads, replies and meetings.
+- **Stynar connector**: a remote MCP server at `https://mcp.stynar.com`. It covers your account overview, campaigns, Lead Finder, saved leads, replies and meetings.
 - **Skills**:
   - `stynar-outreach` walks through finding leads, writing the email and launching it.
   - `stynar-replies` sorts and answers prospect replies.
