@@ -17,6 +17,8 @@ Call `get_account_overview` first.
 
 Agree on the ideal customer before searching: job titles or seniority, department, location, company size, industry. Turn rough terms into exact filter values with `suggest_filter_values` (free) — for example a city or an industry name.
 
+If the user is targeting kinds of companies rather than kinds of people, run `find_companies` first (1 credit per page), agree on the shortlist, then search people at those companies by passing their `domains` to `find_leads`.
+
 ## 3. Find people — confirm the cost
 
 `find_leads` costs **1 credit per results page** (refunded if a page comes back empty). Run page 1, show the user a short table (name, title, company, location), and ask before fetching more pages.
@@ -38,11 +40,13 @@ Write it yourself — don't ask the user to.
 - **Subject:** 2–6 words, lowercase-friendly, no clickbait.
 - **Personalisation:** `{{firstName}}` is always set on saved leads. `{{company}}` and `{{jobTitle}}` are set only when the search result had them, so use them only if every person you saved shows one. A lead missing a variable used in the email is skipped at send time.
 
+Also propose two short follow-ups (for example 3 days and then 4 more days later) that each add something new — a relevant result, a different angle, a simple yes/no question — rather than "just checking in". They're sent as replies in the same thread, so they have no subject.
+
 Show the draft and adjust it until the user is happy.
 
 ## 6. Build the campaign
 
-1. `create_campaign` with the name, subject and body. This only creates a draft.
+1. `create_campaign` with the name, subject, body and `followups`. This only creates a draft. If the user cares about timing, set `schedule` too (their timezone, weekdays, a sending window such as 09:00–17:00, a daily limit). Change anything later with `update_campaign`.
 2. `add_leads_to_campaign` with `savedLeadsLabel` set to the label from step 4.
 3. `get_campaign_report` to confirm the lead count and how the email reads in Stynar.
 
@@ -52,7 +56,7 @@ Before calling `start_campaign`, show this summary and wait for a clear "yes, se
 - Campaign name
 - Sending account(s)
 - Number of recipients
-- The full subject and body
+- The full subject and body, and the follow-ups
 - That sending uses credits per email and can't be undone once emails go out
 
 If the user hesitates, leave it as a draft — they can review it in Stynar. `pause_campaign` stops further sends at any time.
