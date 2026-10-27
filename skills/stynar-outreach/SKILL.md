@@ -39,6 +39,8 @@ Write it yourself — don't ask the user to.
 - **Plain:** no images, no attachments, at most one link, and no ALL-CAPS or "free!!!" — they hurt deliverability.
 - **Subject:** 2–6 words, lowercase-friendly, no clickbait.
 - **Personalisation:** `{{firstName}}` is always set on saved leads. `{{company}}` and `{{jobTitle}}` are set only when the search result had them, so use them only if every person you saved shows one. A lead missing a variable used in the email is skipped at send time.
+- **AI personalisation (`{{AI_CONTENT}}`):** Stynar's core feature, on by default. Put `{{AI_CONTENT}}` on its own line after the greeting. For each lead, Stynar's AI researches the person and company and writes one or two specific sentences there, so write the next paragraph to follow on naturally. Each AI email costs the model's credits instead of the plain per-email credit (`list_ai_models`); tell the user. Turn it off (`aiPersonalisation: false`) only if they ask. For a follow-up that brings a new tailored angle, set `personalise: true` on it.
+- **Format:** write bodies as plain text (blank line between paragraphs). No HTML or markdown: Stynar stores them as plain-text emails the user can edit.
 
 Also propose two short follow-ups (for example 3 days and then 4 more days later) that each add something new — a relevant result, a different angle, a simple yes/no question — rather than "just checking in". They're sent as replies in the same thread, so they have no subject.
 
@@ -46,7 +48,7 @@ Show the draft and adjust it until the user is happy.
 
 ## 6. Build the campaign
 
-1. `create_campaign` with the name, subject, body and `followups`. This only creates a draft. If the user cares about timing, set `schedule` too (their timezone, weekdays, a sending window such as 09:00–17:00, a daily limit). Change anything later with `update_campaign`.
+1. `create_campaign` with `sender` (the mailbox's email address; if the user has more than one, ask which), the name, subject, body and `followups`. This only creates a draft. If the user cares about timing, set `schedule` too (their timezone, weekdays, a sending window such as 09:00–17:00, a daily limit). Change anything later with `update_campaign`.
 2. `add_leads_to_campaign` with `savedLeadsLabel` set to the label from step 4.
 3. `get_campaign_report` to confirm the lead count and how the email reads in Stynar.
 
